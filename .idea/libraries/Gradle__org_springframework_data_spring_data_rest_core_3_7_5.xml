@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.springframework.data:spring-data-rest-core:3.7.5">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../workspase_univer/caches/modules-2/files-2.1/org.springframework.data/spring-data-rest-core/3.7.5/1b1b4bea07f44ca7a2eeecf7d5bb3b39191b009a/spring-data-rest-core-3.7.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../workspase_univer/caches/modules-2/files-2.1/org.springframework.data/spring-data-rest-core/3.7.5/9189e7c8a0743e4bf31c5ea5c5ae594ad9f78f10/spring-data-rest-core-3.7.5-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
