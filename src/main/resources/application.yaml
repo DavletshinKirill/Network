@@ -1,0 +1,30 @@
+spring:
+  main:
+    allow-circular-references: 'true'
+  hibernate:
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+  jpa:
+    generate-ddl: 'true'
+    hibernate:
+      ddl-auto: create
+    show-sql: 'true'
+    properties:
+      hibernate:
+        format_sql: 'true'
+  datasource:
+    driverClassName: org.postgresql.Driver
+    password: Artes228
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/test1
+minio:
+  url: http://127.0.0.1:9000
+  access:
+    secret: JhE9zeGHfHbSxszbFN5PjDUAimULvLpO
+    name: QbanTjtioeIEkm1c
+  default:
+    folder: /Data
+  buckek:
+    name: hello
+
+user:
+  defaultPicture: https://material.angular.io/assets/img/examples/shiba2.jpg

@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -72,7 +73,7 @@ public class PostController {
         	if(itVar.getPost().getId() == id)
         		comments.add(itVar);
         }
-		
+
 		return comments;
 	}
 	

@@ -24,12 +24,16 @@ import dev.vorstu.db.entities.Posts;
 import dev.vorstu.db.entities.RoleUserEntity;
 import dev.vorstu.db.repositories.AuthUserRepo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 
 @RestController
 @RequestMapping("api/admin")
 @Slf4j
 public class AdminController {
-	
+
+	@Value("${user.defaultPicture}")
+	private String defaultPicture;
+
 	@Autowired
 	private AuthUserRepo authUserRepo;
 	
@@ -41,7 +45,7 @@ public class AdminController {
 	@PostMapping(value="users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public AuthUserEntity createStudent(@RequestBody AuthUserEntity user) {
 		AuthUserEntity user1 = new AuthUserEntity(true, user.getUsername(), user.getPassword(), Collections.singleton(new RoleUserEntity(user.getUsername(), BaseRole.STUDENT)));
-		user1.addMainPhoto("https://material.angular.io/assets/img/examples/shiba2.jpg");
+		user1.addMainPhoto(defaultPicture);
 		return authUserRepo.save(user1);
 	}
 	
