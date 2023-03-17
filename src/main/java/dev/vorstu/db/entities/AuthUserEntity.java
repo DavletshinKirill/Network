@@ -45,7 +45,7 @@ public class AuthUserEntity extends BaseEntity {
   private String password;
   private String mainPhoto;
   
-  public void addPost(Posts post) {
+  public void addPost(Post post) {
 	  this.posts.add(post);
   }
   
@@ -69,7 +69,7 @@ public class AuthUserEntity extends BaseEntity {
   @OneToMany(cascade={CascadeType.ALL})
 		  @LazyCollection(LazyCollectionOption.FALSE)
 		  @JoinColumn(name="user_id", updatable=true)
-		  private Set<Posts> posts;
+		  private Set<Post> posts;
    
 }
 

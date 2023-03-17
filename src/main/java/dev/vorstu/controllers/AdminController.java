@@ -1,13 +1,9 @@
 package dev.vorstu.controllers;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.vorstu.db.entities.AuthUserEntity;
 import dev.vorstu.db.entities.BaseRole;
-import dev.vorstu.db.entities.Posts;
 import dev.vorstu.db.entities.RoleUserEntity;
 import dev.vorstu.db.repositories.AuthUserRepo;
 import lombok.extern.slf4j.Slf4j;

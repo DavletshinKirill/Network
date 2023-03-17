@@ -2,18 +2,9 @@ package dev.vorstu.db.entities;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,17 +15,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Posts extends BaseEntity {
+public class Post extends BaseEntity {
 	
 	
-	public Posts(String photo, String title, int likes, Set<Comments> comments) {
+	public Post(String photo, String title, int likes, Set<Comment> comments) {
 		this.photo = photo;
 		this.likes = likes;
 		this.title = title;
 	}
 	
 	
-	public Posts(String photo, String title, int likes) {
+	public Post(String photo, String title, int likes) {
 		this.photo = photo;
 		this.likes = likes;
 		this.title = title;

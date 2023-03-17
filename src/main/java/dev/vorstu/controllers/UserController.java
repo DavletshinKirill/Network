@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.vorstu.adapter.WebSocketService;
 import dev.vorstu.db.entities.AuthUserEntity;
-import dev.vorstu.db.entities.Posts;
+import dev.vorstu.db.entities.Post;
 import dev.vorstu.db.repositories.AuthUserRepo;
 import dev.vorstu.db.repositories.PostRepo;
 import lombok.extern.slf4j.Slf4j;
@@ -60,7 +60,7 @@ public class UserController {
 	}
 	
 	@PostMapping(value="{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public AuthUserEntity addPost(@PathVariable("id")int id, @RequestBody Posts newpost)
+	public AuthUserEntity addPost(@PathVariable("id")int id, @RequestBody Post newpost)
 	{
 		newpost.setPhoto(defaultPicture);
 		Optional<AuthUserEntity> user = authUserRepo.findById((long)id);
@@ -71,7 +71,7 @@ public class UserController {
 	}
 	
 	@PostMapping(value="post", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Posts updatePost(@RequestBody Posts newpost)
+	public Post updatePost(@RequestBody Post newpost)
 	{
 		this.notifyFrontend();
 		return postRepo.save(newpost);

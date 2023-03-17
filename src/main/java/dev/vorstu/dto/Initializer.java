@@ -1,31 +1,16 @@
 package dev.vorstu.dto;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
-import javax.persistence.CascadeType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import dev.vorstu.controllers.AdminController;
 import dev.vorstu.db.entities.AuthUserEntity;
-import dev.vorstu.db.entities.BaseEntity;
 import dev.vorstu.db.entities.BaseRole;
-import dev.vorstu.db.entities.Comments;
-import dev.vorstu.db.entities.Posts;
 import dev.vorstu.db.entities.RoleUserEntity;
 import dev.vorstu.db.repositories.AuthUserRepo;
 import dev.vorstu.db.repositories.CommentRepo;
 import dev.vorstu.db.repositories.PostRepo;
-import lombok.extern.slf4j.Slf4j;
 
 @Component
 public class Initializer {

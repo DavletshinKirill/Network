@@ -1,11 +1,7 @@
 package dev.vorstu.controllers;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -19,10 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import dev.vorstu.adapter.WebSocketService;
 import dev.vorstu.db.entities.AuthUserEntity;
-import dev.vorstu.db.entities.BaseRole;
-import dev.vorstu.db.entities.Comments;
-import dev.vorstu.db.entities.Posts;
-import dev.vorstu.db.entities.RoleUserEntity;
+import dev.vorstu.db.entities.Comment;
+import dev.vorstu.db.entities.Post;
 import dev.vorstu.db.repositories.AuthUserRepo;
 import dev.vorstu.db.repositories.CommentRepo;
 import dev.vorstu.db.repositories.PostRepo;
@@ -44,17 +38,17 @@ public class PostController {
 	
 
 	@GetMapping("{id}")
-	public Optional<Posts> GetPost(@PathVariable("id")int id)
+	public Optional<Post> GetPost(@PathVariable("id")int id)
 	{
 		return postRepo.findById((long)id);
 	}
 	
 	@PostMapping(value="{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Comments addComment(@PathVariable("id")Long id, @RequestBody Comments comment)
+	public Comment addComment(@PathVariable("id")Long id, @RequestBody Comment comment)
 	{
 
-		 Optional<Posts> postOptional = postRepo.findById(id);
-		 Posts newPost = postOptional.get();
+		 Optional<Post> postOptional = postRepo.findById(id);
+		 Post newPost = postOptional.get();
 		 
 		 AuthUserEntity user = getUser();
 		 
@@ -65,10 +59,10 @@ public class PostController {
 	}
 	
 	@GetMapping("comments/{id}")
-	public ArrayList<Comments> getComments(@PathVariable("id")int id)
+	public ArrayList<Comment> getComments(@PathVariable("id")int id)
 	{
-		ArrayList<Comments> comments = new ArrayList<Comments>();
-        for (Comments itVar : commentRepo.findAll())
+		ArrayList<Comment> comments = new ArrayList<Comment>();
+        for (Comment itVar : commentRepo.findAll())
         {
         	if(itVar.getPost().getId() == id)
         		comments.add(itVar);
