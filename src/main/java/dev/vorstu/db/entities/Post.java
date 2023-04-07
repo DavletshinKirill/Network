@@ -1,14 +1,12 @@
 package dev.vorstu.db.entities;
 
-import java.util.Set;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name="posts")
@@ -16,14 +14,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Post extends BaseEntity {
-	
-	
-	public Post(String photo, String title, int likes, Set<Comment> comments) {
-		this.photo = photo;
-		this.likes = likes;
-		this.title = title;
-	}
-	
 	
 	public Post(String photo, String title, int likes) {
 		this.photo = photo;

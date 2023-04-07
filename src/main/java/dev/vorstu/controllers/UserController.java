@@ -1,24 +1,16 @@
 package dev.vorstu.controllers;
 
 
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import dev.vorstu.adapter.WebSocketService;
 import dev.vorstu.db.entities.AuthUserEntity;
-import dev.vorstu.db.entities.Post;
-import dev.vorstu.db.repositories.AuthUserRepo;
 import dev.vorstu.db.repositories.PostRepo;
+import dev.vorstu.dto.PostDTO;
+import dev.vorstu.dto.UserDTO;
+import dev.vorstu.services.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/home/user/")
@@ -27,13 +19,11 @@ public class UserController {
 	
 	
 	@Autowired
-	private AuthUserRepo authUserRepo;
+	private UserService userService;
 	
 	@Autowired
 	private PostRepo postRepo;
 
-	@Value("${user.defaultPicture}")
-	private String defaultPicture;
 	
 	@Autowired
 	private WebSocketService webSocketService;
@@ -54,28 +44,25 @@ public class UserController {
 	}
 
 	@GetMapping("{id}")
-	public Optional<AuthUserEntity> GetPost(@PathVariable("id")Long id)
+	public AuthUserEntity GetPost(@PathVariable("id")Long id)
 	{		
-		return authUserRepo.findById(id);
+		return userService.getUserById(id);
 	}
 	
 	@PostMapping(value="{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public AuthUserEntity addPost(@PathVariable("id")int id, @RequestBody Post newpost)
-	{
-		newpost.setPhoto(defaultPicture);
-		Optional<AuthUserEntity> user = authUserRepo.findById((long)id);
-		AuthUserEntity user1 = user.get();
-		user1.addPost(newpost);		
-		this.notifyFrontend();
-		return authUserRepo.save(user1);
-	}
-	
-	@PostMapping(value="post", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Post updatePost(@RequestBody Post newpost)
+	public UserDTO addPost(@PathVariable("id")Long id, @RequestBody PostDTO postDTO)
 	{
 		this.notifyFrontend();
-		return postRepo.save(newpost);
+		return userService.addPost(id, postDTO);
 	}
+
+// Разберись на фронте с лайками
+//	@PostMapping(value="post", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public Post updatePost(@RequestBody Post postDTO)
+//	{
+//		this.notifyFrontend();
+//		return postRepo.save(postDTO);
+//	}
 
 	
 }

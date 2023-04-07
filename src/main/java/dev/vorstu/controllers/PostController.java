@@ -1,8 +1,8 @@
 package dev.vorstu.controllers;
 
 import dev.vorstu.adapter.WebSocketService;
-import dev.vorstu.db.entities.Comment;
-import dev.vorstu.db.entities.Post;
+import dev.vorstu.dto.CommentDTO;
+import dev.vorstu.dto.PostDTO;
 import dev.vorstu.services.CommentService;
 import dev.vorstu.services.PostService;
 import dev.vorstu.services.UserService;
@@ -12,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/home/post")
@@ -29,20 +28,20 @@ public class PostController {
 	private CommentService commentService;
 
 	@GetMapping("{id}")
-	public Optional<Post> GetPost(@PathVariable("id")int id)
+	public PostDTO GetPost(@PathVariable("id")int id)
 	{
-		return postService.GetPostById(id);
+		return postService.GetPostDTOById(id);
 	}
 	
 	@PostMapping(value="{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Comment addComment(@PathVariable("id")Long id, @RequestBody Comment comment)
+	public CommentDTO addComment(@PathVariable("id")Long id, @RequestBody CommentDTO comment)
 	{
 		 this.notifyFrontend();
 	     return commentService.AddComment(id, comment);
 	}
 	
 	@GetMapping("comments/{id}")
-	public ArrayList<Comment> getComments(@PathVariable("id")int id)
+	public ArrayList<CommentDTO> getComments(@PathVariable("id")int id)
 	{
 		return commentService.getComments(id);
 	}

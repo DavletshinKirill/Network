@@ -1,16 +1,13 @@
 package dev.vorstu.dto;
 
-import java.util.Collections;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import dev.vorstu.db.entities.AuthUserEntity;
 import dev.vorstu.db.entities.BaseRole;
 import dev.vorstu.db.entities.RoleUserEntity;
 import dev.vorstu.db.repositories.AuthUserRepo;
-import dev.vorstu.db.repositories.CommentRepo;
-import dev.vorstu.db.repositories.PostRepo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.Collections;
 
 @Component
 public class Initializer {
@@ -18,11 +15,6 @@ public class Initializer {
 	@Autowired
 	private AuthUserRepo authUserRepo;
 
-	@Autowired
-	private CommentRepo comments;
-	
-	@Autowired
-	private PostRepo posts;
 	
 
 
