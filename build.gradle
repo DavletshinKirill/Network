@@ -31,7 +31,11 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 	 
 	 implementation 'io.minio:minio:8.4.3'
-	
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+
+
 }
 
 tasks.named('test') {
