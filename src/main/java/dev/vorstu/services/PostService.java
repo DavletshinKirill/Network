@@ -7,7 +7,8 @@ import dev.vorstu.mappers.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 
@@ -16,21 +17,34 @@ public class PostService {
     @Autowired
     private PostRepo postRepo;
 
+    @Autowired
+    private CommentService commentService;
 
 
-    public PostDTO GetPostDTOById(long id) {
+
+    public PostDTO getPostDTOById(long id) {
 
         return PostMapper.INSTANCE.toDto(postRepo.findById(id).get());
     }
 
-    public Post GetPostById(long id) {
-
-        return postRepo.findById(id).get();
+    public PostDTO addPost(PostDTO postDTO) {
+        return PostMapper.INSTANCE.toDto(postRepo.save(PostMapper.INSTANCE.toEntity(postDTO)));
+    }
+    public PostDTO updatePost(PostDTO postDTO) {
+        return PostMapper.INSTANCE.toDto(postRepo.save(PostMapper.INSTANCE.toEntity(postDTO)));
+    }
+    public void deletePost(Long id) {
+        commentService.deleteComments(commentService.getComments(id));
     }
 
-    private Stream<Post> iterableToStream() {
-        return StreamSupport.stream(postRepo.findAll().spliterator(), false);
+    public ArrayList<PostDTO> getPosts() {
+        ArrayList<Post> posts = StreamSupport.stream(postRepo.findAll().spliterator(), false).collect(Collectors.toCollection(ArrayList::new));
+        return PostMapper.INSTANCE.listToDTO(posts);
     }
 
+    public ArrayList<PostDTO> getPostsById(Long id) {
+        ArrayList<Post> posts = StreamSupport.stream(postRepo.findAll().spliterator(), false).collect(Collectors.toCollection(ArrayList::new));
+        return PostMapper.INSTANCE.listToDTO(posts);
+    }
 
 }

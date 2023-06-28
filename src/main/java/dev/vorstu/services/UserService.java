@@ -12,7 +12,6 @@ import dev.vorstu.mappers.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -23,29 +22,35 @@ public class UserService {
 
     @Autowired
     private AuthUserRepo authUserRepo;
+
+    @Autowired
+    PostService postService;
+
+    @Autowired
+    CommentService commentService;
     @Value("${user.defaultPicture}")
     private String defaultPicture;
 
 
-    public AuthUserEntity getUser() {
+    public AuthUserEntity getLoggedUser() {
         return authUserRepo.findAll().stream().filter(el -> el.getUsername().equals(SecurityContextHolder.getContext().getAuthentication().getName())).findAny().get();
     }
 
-    public AuthUserEntity getUserById(Long id) {
-        return authUserRepo.findById(id).get();
+    public UserDTO getUserById(Long id) {
+        return UserMapper.INSTANCE.toDto(authUserRepo.findById(id).get());
     }
 
-    public UserDTO addPost(Long id, PostDTO postDTO) {
+    public PostDTO addPost(PostDTO postDTO) {
         Post post = PostMapper.INSTANCE.toEntity(postDTO);
         post.setPhoto(defaultPicture);
-        AuthUserEntity user = authUserRepo.findById(id).get();
+        AuthUserEntity user = this.getLoggedUser();
         user.addPost(post);
-        return UserMapper.INSTANCE.toDto(authUserRepo.save(user));
+        return postDTO;
     }
 
     public AuthUserEntity createUser(AuthUserEntity user) {
         AuthUserEntity user1 = new AuthUserEntity(true, user.getUsername(), user.getPassword(), Collections.singleton(new RoleUserEntity(user.getUsername(), BaseRole.STUDENT)));
-        user1.addMainPhoto(defaultPicture);
+        user1.setMainPhoto(defaultPicture);
         return authUserRepo.save(user1);
     }
 
@@ -59,13 +64,11 @@ public class UserService {
     }
 
     public AuthUserEntity updateUser(AuthUserEntity user) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(Collections.singleton(new RoleUserEntity(user.getUsername(), BaseRole.STUDENT)));
         AuthUserEntity user1 = authUserRepo.findAll().stream().filter(el -> el.getId() == user.getId()).findAny().get();
-        user.setEnabled(true);
-        user.setPosts(user1.getPosts());
-        user.setMainPhoto(user1.getMainPhoto());
-        return authUserRepo.save(user);
+
+        user1.setMainPhoto(user.getMainPhoto());
+        user1.setUsername(user.getUsername());
+
+        return authUserRepo.save(user1);
     }
 }

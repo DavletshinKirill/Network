@@ -2,10 +2,11 @@ package dev.vorstu.services;
 
 import dev.vorstu.db.entities.AuthUserEntity;
 import dev.vorstu.db.entities.Comment;
-import dev.vorstu.db.entities.Post;
 import dev.vorstu.db.repositories.CommentRepo;
 import dev.vorstu.dto.CommentDTO;
+import dev.vorstu.dto.PostDTO;
 import dev.vorstu.mappers.CommentMapper;
+import dev.vorstu.mappers.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,20 +25,48 @@ public class CommentService {
     @Autowired
     private PostService postService;
 
-    public CommentDTO AddComment(Long id, CommentDTO commentDTO) {
-        Post post = postService.GetPostById(id);
-        AuthUserEntity user = userService.getUser();
+    public CommentDTO addComment(Long id, CommentDTO commentDTO) {
+        PostDTO post = postService.getPostDTOById(id);
+        AuthUserEntity user = userService.getLoggedUser();
         Comment comment = CommentMapper.INSTANCE.toEntity(commentDTO);
-        comment.setPost(post);
+        comment.setPost(PostMapper.INSTANCE.toEntity(post));
         comment.setUser(user);
         return CommentMapper.INSTANCE.toDto(commentRepo.save(comment));
     }
 
-    public ArrayList<CommentDTO> getComments(int id) {
+    public ArrayList<CommentDTO> getComments(Long id) {
 
         ArrayList<Comment> comments = StreamSupport.stream(commentRepo.findAll().spliterator(), false).collect(Collectors.toCollection(ArrayList::new));
         comments = comments.stream().filter(el -> el.getPost().getId() == id).collect(Collectors.toCollection(ArrayList::new));
 
         return CommentMapper.INSTANCE.listToDTO(comments);
+    }
+
+    public ArrayList<CommentDTO> getComments() {
+
+        ArrayList<Comment> comments = StreamSupport.stream(commentRepo.findAll().spliterator(), false).collect(Collectors.toCollection(ArrayList::new));
+
+        return CommentMapper.INSTANCE.listToDTO(comments);
+    }
+
+    public CommentDTO getComment(long id) {
+        return CommentMapper.INSTANCE.toDto(commentRepo.findById(id).get());
+    }
+
+
+
+    public CommentDTO putComment( CommentDTO commentDTO) {
+        Comment comment = commentRepo.findById((long)commentDTO.getId()).get();
+        comment.setComment(commentDTO.getComment());
+        return CommentMapper.INSTANCE.toDto(commentRepo.save(comment));
+    }
+
+    public void deleteComment(long id) {
+        commentRepo.deleteById(id);
+    }
+
+    public void deleteComments(ArrayList<CommentDTO> commentDTOS) {
+        ArrayList<Long> commentsId = commentDTOS.stream().map( u -> (long)u.getId()).collect(Collectors.toCollection(ArrayList::new));
+        commentRepo.deleteAllById(commentsId);
     }
 }

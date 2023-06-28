@@ -1,8 +1,6 @@
 package dev.vorstu.config;
 
 
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-import dev.vorstu.db.entities.BaseRole;
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
@@ -50,8 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       .httpBasic().and()
       .authorizeRequests()
 	.antMatchers(HttpMethod.GET, "/api/home/**").permitAll()
-	.antMatchers(HttpMethod.GET , 	"/api/admin/**").hasAnyAuthority(BaseRole.SUPER_USER.getRole())
-	.antMatchers(HttpMethod.POST , "/api/admin/**").hasAnyAuthority(BaseRole.SUPER_USER.getRole())
+	.antMatchers(HttpMethod.GET , 	"/api/admin/**").permitAll()
+	.antMatchers(HttpMethod.POST , "/api/admin/**").permitAll()
 	  .antMatchers(HttpMethod.GET, "/api/user").permitAll()
 	  .antMatchers(HttpMethod.POST, "/api/logout").permitAll()
       .anyRequest().authenticated()

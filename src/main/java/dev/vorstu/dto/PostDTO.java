@@ -21,4 +21,10 @@ public class PostDTO {
         this.likes = likes;
         this.title = title;
     }
+
+    public PostDTO(String photo, String title, int likes) {
+        this.photo = photo;
+        this.likes = likes;
+        this.title = title;
+    }
 }

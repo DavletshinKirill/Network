@@ -30,23 +30,37 @@ public class PostController {
 	@GetMapping("{id}")
 	public PostDTO GetPost(@PathVariable("id")int id)
 	{
-		return postService.GetPostDTOById(id);
+		return postService.getPostDTOById(id);
 	}
 	
 	@PostMapping(value="{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public CommentDTO addComment(@PathVariable("id")Long id, @RequestBody CommentDTO comment)
 	{
 		 this.notifyFrontend();
-	     return commentService.AddComment(id, comment);
+	     return commentService.addComment(id, comment);
 	}
 	
 	@GetMapping("comments/{id}")
-	public ArrayList<CommentDTO> getComments(@PathVariable("id")int id)
+	public ArrayList<CommentDTO> getComments(@PathVariable("id")Long id)
 	{
 		return commentService.getComments(id);
 	}
 
-	
+	@PutMapping(value="{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public CommentDTO putComment(@PathVariable("id")Long id, @RequestBody CommentDTO comment)
+	{
+		this.notifyFrontend();
+		return commentService.putComment(comment);
+	}
+
+	@DeleteMapping(value="{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Long deleteComment(@PathVariable("id")Long id)
+	{
+		this.notifyFrontend();
+		commentService.deleteComment(id);
+		return id;
+	}
+
 	@Autowired
 	private WebSocketService webSocketService;
 

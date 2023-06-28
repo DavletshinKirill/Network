@@ -1,20 +1,14 @@
 package dev.vorstu.db.entities;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name="users")

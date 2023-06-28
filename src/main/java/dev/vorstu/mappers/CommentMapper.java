@@ -17,4 +17,5 @@ public interface CommentMapper {
     Comment toEntity(CommentDTO post);
 
     ArrayList<CommentDTO> listToDTO(ArrayList<Comment> listOfComments);
+    ArrayList<Comment> listToEntity(ArrayList<CommentDTO> listOfComments);
 }

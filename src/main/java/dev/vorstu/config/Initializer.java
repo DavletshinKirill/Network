@@ -1,4 +1,4 @@
-package dev.vorstu.dto;
+package dev.vorstu.config;
 
 import dev.vorstu.db.entities.AuthUserEntity;
 import dev.vorstu.db.entities.BaseRole;
@@ -15,11 +15,6 @@ public class Initializer {
 	@Autowired
 	private AuthUserRepo authUserRepo;
 
-	
-
-
-
-	
 	public void initial() {      
 	    
 	    AuthUserEntity user1 = new AuthUserEntity(true, "user1", "123456", "https://material.angular.io/assets/img/examples/shiba2.jpg",

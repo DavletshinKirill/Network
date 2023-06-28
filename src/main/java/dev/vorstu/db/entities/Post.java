@@ -21,9 +21,7 @@ public class Post extends BaseEntity {
 		this.title = title;
 	}
 	
-	@Column
-	(
-	name = "title",
+	@Column(name = "title",
 	nullable = false,
 	columnDefinition = "TEXT"
 	)
