@@ -45,6 +45,7 @@ public class UserService {
         post.setPhoto(defaultPicture);
         AuthUserEntity user = this.getLoggedUser();
         user.addPost(post);
+        authUserRepo.save(user);
         return postDTO;
     }
 

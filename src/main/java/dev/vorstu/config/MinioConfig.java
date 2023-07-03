@@ -9,24 +9,21 @@ import io.minio.MinioClient;
 
 @Configuration
 public class MinioConfig {
-    @Value("${minio.access.name}")
-    String accessKey;
-    @Value("${minio.access.secret}")
-    String accessSecret;
+
     @Value("${minio.url}")
-    String minioUrl;
+    private String minioUrl;
+
+    @Value("${minio.accessKey}")
+    private String accessKey;
+
+    @Value("${minio.secretKey}")
+    private String secretKey;
 
     @Bean
-    public MinioClient generateMinioClient() {
-        try {
-            MinioClient client = MinioClient.builder()
-            		.endpoint(minioUrl)
-            		.credentials(accessKey, accessSecret)
-            		.build();
-            return client;
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
+    public MinioClient minioClient() {
+        return MinioClient.builder()
+                .endpoint(minioUrl)
+                .credentials(accessKey, secretKey)
+                .build();
     }
-    
 }

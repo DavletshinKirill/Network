@@ -17,14 +17,16 @@ spring:
     username: postgres
     url: jdbc:postgresql://localhost:5432/NetworkTest
 minio:
+  accessKey: O5wNIYXWZsKOdIldQPKn
+  secretKey: i2cyJW51LAsQFHcKfnECY4rWV53l9pFtALviYFgA
   url: http://127.0.0.1:9000
   access:
-    secret: JhE9zeGHfHbSxszbFN5PjDUAimULvLpO
-    name: QbanTjtioeIEkm1c
-  default:
-    folder: /Data
+    name: admin
+    secret: admin
   buckek:
-    name: hello
+    name: test
+  default:
+    folder: /Data/test
 
 user:
   defaultPicture: https://material.angular.io/assets/img/examples/shiba2.jpg

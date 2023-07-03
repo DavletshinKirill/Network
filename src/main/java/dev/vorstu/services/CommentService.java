@@ -31,7 +31,8 @@ public class CommentService {
         Comment comment = CommentMapper.INSTANCE.toEntity(commentDTO);
         comment.setPost(PostMapper.INSTANCE.toEntity(post));
         comment.setUser(user);
-        return CommentMapper.INSTANCE.toDto(commentRepo.save(comment));
+        comment = commentRepo.save(comment);
+        return CommentMapper.INSTANCE.toDto(comment);
     }
 
     public ArrayList<CommentDTO> getComments(Long id) {
