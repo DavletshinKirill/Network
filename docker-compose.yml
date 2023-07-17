@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  app:
+    build: ./
+    container_name: 'network-app'
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://172.18.0.2:5432/NetworkTest"
+      SPRING_DATASOURCE_USERNAME: "postgres"
+      SPRING_DATASOURCE_PASSWORD: "Artes228"
+
+  postgres:
+    image: 'postgres:13-alpine'
+    container_name: 'network-postgres'
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "Artes228"
+    ports:
+      - "5432:5432"
+    volumes:
+      - db:/var/lib/postgresql/data
+volumes:
+  db:
+    driver: local
+
+
