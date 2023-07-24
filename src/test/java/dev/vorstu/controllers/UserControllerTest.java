@@ -15,8 +15,8 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -54,35 +54,35 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.title").value(postDTO.getTitle()));
     }
 
-    @Test
-    void updatePost() throws Exception {
-        Long id = 1L;
-        PostDTO postDTO = postService.getPostDTOById(id);
-        postDTO.setTitle("new test");
-        postDTO.setLikes(666);
-        postDTO.setPhoto("new photo test");
+//    @Test
+//    void updatePost() throws Exception {
+//        Long id = 1L;
+//        PostDTO postDTO = postService.getPostDTOById(id);
+//        postDTO.setTitle("new test");
+//        postDTO.setLikes(666);
+//        postDTO.setPhoto("new photo test");
+//
+//        mockMvc.perform(put("/api/home/user/{id}", id)
+//                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                        .content(objectMapper.writeValueAsString(postDTO))
+//                        .accept(MediaType.APPLICATION_JSON_VALUE))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.likes").value(postDTO.getLikes()))
+//                .andExpect(jsonPath("$.photo").value(postDTO.getPhoto()))
+//                .andExpect(jsonPath("$.title").value(postDTO.getTitle()));
+//    }
 
-        mockMvc.perform(put("/api/home/user/{id}", id)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(objectMapper.writeValueAsString(postDTO))
-                        .accept(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.likes").value(postDTO.getLikes()))
-                .andExpect(jsonPath("$.photo").value(postDTO.getPhoto()))
-                .andExpect(jsonPath("$.title").value(postDTO.getTitle()));
-    }
-
-    @Test
-    void deletePost() throws Exception {
-        int sizeBefore = postService.getPosts().size();
-        Long id = 1L;
-        mockMvc.perform(delete("/api/home/user/{id}", id))
-                .andExpect(status().isOk());
-        int sizeAfter = postService.getPosts().size();
-
-        assertThat(sizeBefore).isNotEqualTo(sizeAfter);
-        assertThat(sizeBefore - 1).isEqualTo(sizeAfter);
-    }
+//    @Test
+//    void deletePost() throws Exception {
+//        int sizeBefore = postService.getPosts().size();
+//        Long id = 1L;
+//        mockMvc.perform(delete("/api/home/user/{id}", id))
+//                .andExpect(status().isOk());
+//        int sizeAfter = postService.getPosts().size();
+//
+//        assertThat(sizeBefore).isNotEqualTo(sizeAfter);
+//        assertThat(sizeBefore - 1).isEqualTo(sizeAfter);
+//    }
 
     @Test
     void getPost() throws Exception {

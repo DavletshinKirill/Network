@@ -12,7 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/home/user/")
+	@RequestMapping("api/home/user/")
 @Slf4j
 public class UserController {
 

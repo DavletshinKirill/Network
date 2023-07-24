@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,7 +13,7 @@ import java.util.Set;
 public class UserDTO {
     private String username;
     private String mainPhoto;
-    private Set<PostDTO> posts;
+    private List<PostDTO> posts;
     private long id;
 
     public UserDTO(int id, String username, String mainPhoto) {

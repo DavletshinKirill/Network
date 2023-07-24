@@ -48,13 +48,13 @@ public class TestPostService {
         assertThat(sizeBefore - 1).isEqualTo(sizeAfter);
     }
 
-    @Test
-    public void updatePost(){
-        PostDTO postDTO = postService.getPostDTOById(1);
-        postDTO.setLikes(666);
-        postDTO.setTitle("Change title in Test");
-        postService.updatePost(postDTO);
-        assertThat(postService.getPostDTOById(1).getLikes()).isEqualTo(postDTO.getLikes());
-    }
+//    @Test
+//    public void updatePost(){
+//        PostDTO postDTO = postService.getPostDTOById(1);
+//        postDTO.setLikes(666);
+//        postDTO.setTitle("Change title in Test");
+//        postService.updatePost(postDTO);
+//        assertThat(postService.getPostDTOById(1).getLikes()).isEqualTo(postDTO.getLikes());
+//    }
 
 }

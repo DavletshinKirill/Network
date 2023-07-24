@@ -5,7 +5,6 @@ import io.minio.errors.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,21 +25,17 @@ public class MinioController {
 	MinioService minioService;
 
 	@PostMapping("/upload")
-	public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
-		try {
+	public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
 			// Save the uploaded file to a temporary location
-			Path tempFile = Files.createTempFile("temp", file.getOriginalFilename());
-			file.transferTo(tempFile);
+		Path tempFile = Files.createTempFile("temp", file.getOriginalFilename());
+		file.transferTo(tempFile);
 
-			// Upload the file to MinIO
-			minioService.uploadFile( file.getOriginalFilename(), tempFile.toString());
-			log.warn("upload file");
-			// Delete the temporary file
-			Files.delete(tempFile);
-			return ResponseEntity.ok("File uploaded successfully");
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file");
-		}
+		// Upload the file to MinIO
+		minioService.uploadFile( file.getOriginalFilename(), tempFile.toString());
+		log.warn("upload file");
+		// Delete the temporary file
+		Files.delete(tempFile);
+		return ResponseEntity.ok("File uploaded successfully");
 	}
 
 

@@ -17,9 +17,9 @@ spring:
     username: postgres
     url: jdbc:postgresql://localhost:5432/NetworkTest
 minio:
-  accessKey: O5wNIYXWZsKOdIldQPKn
-  secretKey: i2cyJW51LAsQFHcKfnECY4rWV53l9pFtALviYFgA
-  url: http://127.0.0.1:9000
+  accessKey: nM14Qt0sAPygnAKH3qwh
+  secretKey: hU3ZBbyVT0PORKB7taWmaZKw0NOaSI0iCBholFKN
+  url: http://minio:9000
   access:
     name: admin
     secret: admin
