@@ -32,8 +32,8 @@ public class TestCommentService {
 
     @Test
     public void addComment(){
-        CommentDTO commentDTO = new CommentDTO(4, "ads");
-        commentService.addComment((long)1, commentDTO);
+        CommentDTO commentDTO = new CommentDTO("ads");
+        commentService.addComment((long)3, commentDTO);
         assertThat(commentService.getComment(4).getComment()).isEqualTo(commentDTO.getComment());
     }
 

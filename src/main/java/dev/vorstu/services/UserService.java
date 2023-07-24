@@ -42,7 +42,6 @@ public class UserService {
 
     public PostDTO addPost(PostDTO postDTO) {
         Post post = PostMapper.INSTANCE.toEntity(postDTO);
-        post.setPhoto(defaultPicture);
         AuthUserEntity user = this.getLoggedUser();
         user.addPost(post);
         authUserRepo.save(user);
@@ -65,11 +64,23 @@ public class UserService {
     }
 
     public AuthUserEntity updateUser(AuthUserEntity user) {
-        AuthUserEntity user1 = authUserRepo.findAll().stream().filter(el -> el.getId() == user.getId()).findAny().get();
+        AuthUserEntity user1 = authUserRepo.findById(user.getId()).get();
 
         user1.setMainPhoto(user.getMainPhoto());
         user1.setUsername(user.getUsername());
 
         return authUserRepo.save(user1);
+    }
+
+    public UserDTO updatePhoto(UserDTO userDTO) {
+        AuthUserEntity user = authUserRepo.findById(userDTO.getId()).get();
+        user.setMainPhoto(userDTO.getMainPhoto());
+        return UserMapper.INSTANCE.toDto(authUserRepo.save(user));
+    }
+
+    public UserDTO updateUserName(UserDTO userDTO) {
+        AuthUserEntity user = authUserRepo.findById(userDTO.getId()).get();
+        user.setUsername(userDTO.getUsername());
+        return UserMapper.INSTANCE.toDto(authUserRepo.save(user));
     }
 }

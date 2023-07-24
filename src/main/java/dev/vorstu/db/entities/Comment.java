@@ -1,18 +1,12 @@
 package dev.vorstu.db.entities;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name="comments")
@@ -30,17 +24,9 @@ public class Comment extends BaseEntity {
 	public Comment(String comment) {
 		this.comment = comment;
 	}
-	
-	
-	public void addUser(AuthUserEntity user) {
-		this.user = user;
-	}
 
-	public void addPost(Post post) {
-		this.post = post;
-	}
 	
-	  @ManyToOne(cascade = CascadeType.ALL)
+	  @ManyToOne()
 			  @LazyCollection(LazyCollectionOption.FALSE)
 			  @JoinColumn(name="user_id", updatable=true)
 			  private AuthUserEntity user;

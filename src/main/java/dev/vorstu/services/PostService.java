@@ -2,6 +2,7 @@ package dev.vorstu.services;
 
 import dev.vorstu.db.entities.Post;
 import dev.vorstu.db.repositories.PostRepo;
+import dev.vorstu.dto.CommentDTO;
 import dev.vorstu.dto.PostDTO;
 import dev.vorstu.mappers.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,15 @@ public class PostService {
         return PostMapper.INSTANCE.toDto(postRepo.save(PostMapper.INSTANCE.toEntity(postDTO)));
     }
     public PostDTO updatePost(PostDTO postDTO) {
-        return PostMapper.INSTANCE.toDto(postRepo.save(PostMapper.INSTANCE.toEntity(postDTO)));
+        Post post = postRepo.findById((long)postDTO.getId()).get();
+        post.setTitle(postDTO.getTitle());
+        post.setPhoto(postDTO.getPhoto());
+        return PostMapper.INSTANCE.toDto(postRepo.save(post));
     }
     public void deletePost(Long id) {
-        commentService.deleteComments(commentService.getComments(id));
+        ArrayList<CommentDTO> commentDTOS = commentService.getComments(id);
+        commentService.deleteComments(commentDTOS);
+        postRepo.deleteById(id);
     }
 
     public ArrayList<PostDTO> getPosts() {

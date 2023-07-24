@@ -6,7 +6,7 @@ spring:
   jpa:
     generate-ddl: 'true'
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: 'true'
     properties:
       hibernate:
@@ -29,4 +29,4 @@ minio:
     folder: /Data/test
 
 user:
-  defaultPicture: https://material.angular.io/assets/img/examples/shiba2.jpg
+  defaultPicture: https://avatars.mds.yandex.net/i?id=56edf044e3db39ca03a8baad37111492f46d61d6-9100075-images-thumbs&n=13

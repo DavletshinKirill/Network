@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class PostDTO {
-    private int id;
+    private long id;
     private String title;
     private String photo;
     private int likes;

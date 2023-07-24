@@ -2,14 +2,12 @@ package dev.vorstu.controllers;
 
 import dev.vorstu.services.MinioService;
 import io.minio.errors.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -20,6 +18,8 @@ import java.security.NoSuchAlgorithmException;
 
 
 @RestController
+@Slf4j
+@RequestMapping("api")
 public class MinioController {
 
 	@Autowired
@@ -34,10 +34,9 @@ public class MinioController {
 
 			// Upload the file to MinIO
 			minioService.uploadFile( file.getOriginalFilename(), tempFile.toString());
-
+			log.warn("upload file");
 			// Delete the temporary file
 			Files.delete(tempFile);
-
 			return ResponseEntity.ok("File uploaded successfully");
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file");
@@ -46,11 +45,11 @@ public class MinioController {
 
 
 
-	@GetMapping(path = "/download")
-	public ResponseEntity<ByteArrayResource> downloadFile(@RequestParam(value = "file") String file) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
+	@GetMapping(path = "/download/{filename}")
+	public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable("filename") String file) throws IOException, ServerException, InsufficientDataException, ErrorResponseException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {
 		byte[] data = minioService.downloadFile(file).readAllBytes();
 		ByteArrayResource resource = new ByteArrayResource(data);
-
+		log.warn("download file");
 		return ResponseEntity
 				.ok()
 				.contentLength(data.length)

@@ -14,7 +14,7 @@ public class UserDTO {
     private String username;
     private String mainPhoto;
     private Set<PostDTO> posts;
-    private int id;
+    private long id;
 
     public UserDTO(int id, String username, String mainPhoto) {
         this.id = id;

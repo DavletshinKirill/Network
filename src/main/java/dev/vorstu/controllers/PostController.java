@@ -8,10 +8,9 @@ import dev.vorstu.services.PostService;
 import dev.vorstu.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("api/home/post")
@@ -41,9 +40,10 @@ public class PostController {
 	}
 	
 	@GetMapping("comments/{id}")
-	public ArrayList<CommentDTO> getComments(@PathVariable("id")Long id)
+	public Page<CommentDTO> getComments(@PathVariable("id")Long id, @RequestParam(defaultValue = "0") int pageNo,
+											 @RequestParam(defaultValue = "5") int pageSize)
 	{
-		return commentService.getComments(id);
+		return commentService.getComments(id, pageNo, pageSize);
 	}
 
 	@PutMapping(value="{id}", produces = MediaType.APPLICATION_JSON_VALUE)

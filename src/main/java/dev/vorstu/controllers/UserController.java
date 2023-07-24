@@ -55,16 +55,31 @@ public class UserController {
 		return userService.addPost(postDTO);
 	}
 
-	@PutMapping(value="{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value="update", produces = MediaType.APPLICATION_JSON_VALUE)
 	public PostDTO updatePost(@RequestBody PostDTO postDTO)
 	{
 		this.notifyFrontend();
 		return postService.updatePost(postDTO);
 	}
 
+	@PutMapping(value="updatePhoto", produces = MediaType.APPLICATION_JSON_VALUE)
+	public UserDTO updateUserPhoto(@RequestBody UserDTO userDTO)
+	{
+		this.notifyFrontend();
+		return userService.updatePhoto(userDTO);
+	}
+
+	@PutMapping(value="updateUsername", produces = MediaType.APPLICATION_JSON_VALUE)
+	public UserDTO updateUsername(@RequestBody UserDTO userDTO)
+	{
+		this.notifyFrontend();
+		return userService.updateUserName(userDTO);
+	}
+
 	@DeleteMapping(value="{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Long deletePost(@PathVariable("id")Long id)
 	{
+		log.warn("delete post");
 		this.notifyFrontend();
 		postService.deletePost(id);
 		return id;

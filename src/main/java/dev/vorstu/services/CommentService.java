@@ -8,6 +8,9 @@ import dev.vorstu.dto.PostDTO;
 import dev.vorstu.mappers.CommentMapper;
 import dev.vorstu.mappers.PostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,17 +33,17 @@ public class CommentService {
         AuthUserEntity user = userService.getLoggedUser();
         Comment comment = CommentMapper.INSTANCE.toEntity(commentDTO);
         comment.setPost(PostMapper.INSTANCE.toEntity(post));
-        comment.setUser(user);
+        comment.setUser(userService.getLoggedUser());
+
         comment = commentRepo.save(comment);
         return CommentMapper.INSTANCE.toDto(comment);
     }
 
-    public ArrayList<CommentDTO> getComments(Long id) {
+    public Page<CommentDTO> getComments(Long id, int pageNo, int pageSize) {
 
-        ArrayList<Comment> comments = StreamSupport.stream(commentRepo.findAll().spliterator(), false).collect(Collectors.toCollection(ArrayList::new));
-        comments = comments.stream().filter(el -> el.getPost().getId() == id).collect(Collectors.toCollection(ArrayList::new));
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
 
-        return CommentMapper.INSTANCE.listToDTO(comments);
+        return commentRepo.findByPostId(id, pageable).map(CommentMapper.INSTANCE::toDto);
     }
 
     public ArrayList<CommentDTO> getComments() {
@@ -49,6 +52,13 @@ public class CommentService {
 
         return CommentMapper.INSTANCE.listToDTO(comments);
     }
+    public ArrayList<CommentDTO> getComments(Long id) {
+
+        ArrayList<Comment> comments = (ArrayList<Comment>) commentRepo.findByPostId(id);
+
+        return CommentMapper.INSTANCE.listToDTO(comments);
+    }
+
 
     public CommentDTO getComment(long id) {
         return CommentMapper.INSTANCE.toDto(commentRepo.findById(id).get());
@@ -63,11 +73,18 @@ public class CommentService {
     }
 
     public void deleteComment(long id) {
-        commentRepo.deleteById(id);
+        Comment comment = commentRepo.findById(id).get();
+        comment.setUser(null);
+        comment.setPost(null);
+        commentRepo.delete(comment);
     }
 
     public void deleteComments(ArrayList<CommentDTO> commentDTOS) {
-        ArrayList<Long> commentsId = commentDTOS.stream().map( u -> (long)u.getId()).collect(Collectors.toCollection(ArrayList::new));
-        commentRepo.deleteAllById(commentsId);
+        for (CommentDTO commentDTO : commentDTOS) {
+            commentDTO.setUser(null);
+            commentDTO.setPost(null);
+        }
+        ArrayList<Comment> comments = CommentMapper.INSTANCE.listToEntity(commentDTOS);
+        commentRepo.deleteAll(comments);
     }
 }
