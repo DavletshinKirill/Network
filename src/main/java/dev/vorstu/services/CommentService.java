@@ -1,6 +1,5 @@
 package dev.vorstu.services;
 
-import dev.vorstu.db.entities.AuthUserEntity;
 import dev.vorstu.db.entities.Comment;
 import dev.vorstu.db.repositories.CommentRepo;
 import dev.vorstu.dto.CommentDTO;
@@ -27,23 +26,24 @@ public class CommentService {
 
     @Autowired
     private PostService postService;
-
-    public CommentDTO addComment(Long id, CommentDTO commentDTO) {
-        PostDTO post = postService.getPostDTOById(id);
-        AuthUserEntity user = userService.getLoggedUser();
+//    @Caching(cacheable = {
+//            @Cacheable(value = "CommentService::putComment",
+//                    key = "#id + '_' + #commentDTO.id "),
+//    })
+    public CommentDTO addComment(CommentDTO commentDTO, Long userId, Long postId) {
+        PostDTO post = postService.getPostDTOById(postId);
         Comment comment = CommentMapper.INSTANCE.toEntity(commentDTO);
         comment.setPost(PostMapper.INSTANCE.toEntity(post));
-        comment.setUser(userService.getLoggedUser());
-
-        comment = commentRepo.save(comment);
-        return CommentMapper.INSTANCE.toDto(comment);
+        comment.setUser(userService.getUserEntityById(userId));
+        return CommentMapper.INSTANCE.toDto(commentRepo.save(comment));
     }
 
+    //@Cacheable(value = "CommentService::getComments", key = "#id + '_' + #pageNo + '_' + #pageSize")
     public Page<CommentDTO> getComments(Long id, int pageNo, int pageSize) {
 
         Pageable pageable = PageRequest.of(pageNo, pageSize);
 
-        return commentRepo.findByPostId(id, pageable).map(CommentMapper.INSTANCE::toDto);
+        return commentRepo.findCommentsByPostId(id, pageable).map(CommentMapper.INSTANCE::toDto);
     }
 
     public ArrayList<CommentDTO> getComments() {
@@ -65,13 +65,16 @@ public class CommentService {
     }
 
 
-
+//    @Caching(put = {
+//            @CachePut(value = "CommentService::putComment",
+//                    key = "#commentDTO.id"),
+//    })
     public CommentDTO putComment( CommentDTO commentDTO) {
         Comment comment = commentRepo.findById((long)commentDTO.getId()).get();
         comment.setComment(commentDTO.getComment());
         return CommentMapper.INSTANCE.toDto(commentRepo.save(comment));
     }
-
+    //@CacheEvict(value = "CommentService::putComment", key = "#id")
     public void deleteComment(long id) {
         Comment comment = commentRepo.findById(id).get();
         comment.setUser(null);

@@ -2,8 +2,10 @@ package dev.vorstu.db.entities;
 
 import lombok.Getter;
 
+import java.io.Serializable;
+
 @Getter
-public enum BaseRole {
+public enum BaseRole implements Serializable {
 	SUPER_USER("ROLE_SUPER_USER", "SUPER_USER"),
 	STUDENT("ROLE_STUDENT", "STUDENT"),
 	TEACHER("ROLE_TEACHER", "TEACHER");

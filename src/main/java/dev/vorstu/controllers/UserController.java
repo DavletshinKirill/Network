@@ -6,14 +6,16 @@ import dev.vorstu.dto.PostDTO;
 import dev.vorstu.dto.UserDTO;
 import dev.vorstu.services.PostService;
 import dev.vorstu.services.UserService;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-	@RequestMapping("api/home/user/")
+@RequestMapping("api/home/user/")
 @Slf4j
+@Api("Контроллер для постов")
 public class UserController {
 
 

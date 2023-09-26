@@ -1,5 +1,13 @@
 version: '3'
 
+volumes:
+  db:
+    driver: local
+  minio-storage:
+    driver: local
+  cache:
+    driver: local
+
 services:
   app:
     build: ./
@@ -46,11 +54,12 @@ services:
       timeout: 20s
       retries: 3
 
-
-volumes:
-  db:
-    driver: local
-  minio-storage:
-    driver: local
-
-
+  redis:
+    container_name: 'network-redis'
+    image: redis:7.2-rc-alpine
+    command: redis-server --save 20 1 --loglevel warning --requirepass c3NkdmN6eGN6Y3dhc2Rxd2Q=
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - cache:/data

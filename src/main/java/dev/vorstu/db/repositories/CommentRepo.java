@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface CommentRepo extends CrudRepository<Comment, Long> {
-    public Page<Comment> findByPostId(Long postId, Pageable pageable);
+    public Page<Comment> findCommentsByPostId(Long postId, Pageable pageable);
     public List<Comment> findByPostId(Long postId);
 
 }

@@ -2,6 +2,7 @@ package dev.vorstu.controllers;
 
 import dev.vorstu.db.entities.AuthUserEntity;
 import dev.vorstu.services.UserService;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -12,6 +13,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("api/admin")
 @Slf4j
+@Api("Контроллер для пользователей")
 public class AdminController {
 
 

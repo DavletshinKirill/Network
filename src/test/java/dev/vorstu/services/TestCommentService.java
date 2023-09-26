@@ -32,9 +32,9 @@ public class TestCommentService {
 
     @Test
     public void addComment(){
-        CommentDTO commentDTO = new CommentDTO("ads");
-        commentService.addComment((long)3, commentDTO);
-        assertThat(commentService.getComment(4).getComment()).isEqualTo(commentDTO.getComment());
+        CommentDTO commentDTO = new CommentDTO("asd");
+        commentService.addComment(commentDTO, (long)3, (long)1);
+        assertThat(commentService.getComment(4).getComment()).isEqualTo("asd");
     }
 
     @Test

@@ -39,6 +39,9 @@ public class UserService {
     public UserDTO getUserById(Long id) {
         return UserMapper.INSTANCE.toDto(authUserRepo.findById(id).get());
     }
+    public AuthUserEntity getUserEntityById(Long id) {
+        return authUserRepo.findById(id).get();
+    }
 
     public PostDTO addPost(PostDTO postDTO) {
         Post post = PostMapper.INSTANCE.toEntity(postDTO);

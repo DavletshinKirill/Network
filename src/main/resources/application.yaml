@@ -3,6 +3,9 @@ spring:
     allow-circular-references: 'true'
   hibernate:
     dialect: org.hibernate.dialect.PostgreSQLDialect
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   jpa:
     generate-ddl: 'true'
     hibernate:
@@ -19,7 +22,7 @@ spring:
 minio:
   accessKey: nM14Qt0sAPygnAKH3qwh
   secretKey: hU3ZBbyVT0PORKB7taWmaZKw0NOaSI0iCBholFKN
-  url: http://minio:9000
+  url: http://localhost:9000
   access:
     name: admin
     secret: admin
@@ -27,6 +30,7 @@ minio:
     name: test
   default:
     folder: /Data/test
+
 
 user:
   defaultPicture: https://avatars.mds.yandex.net/i?id=56edf044e3db39ca03a8baad37111492f46d61d6-9100075-images-thumbs&n=13

@@ -5,8 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import dev.vorstu.config.Initializer;
+import org.springframework.cache.annotation.EnableCaching;
 
-@SpringBootApplication 
+@SpringBootApplication
+@EnableCaching
 public class VorstuApplication {
 
 	

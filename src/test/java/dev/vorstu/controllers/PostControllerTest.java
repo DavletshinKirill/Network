@@ -54,17 +54,17 @@ class PostControllerTest {
                 .andExpect(jsonPath("$.title").value(postDTO.getTitle()));
     }
 
-    @Test
-    void addComment() throws Exception {
-        CommentDTO commentDTO = new CommentDTO("test comment");
-
-        mockMvc.perform(post("/api/home/post/{id}", 1)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .accept(MediaType.APPLICATION_JSON_VALUE)
-                        .content(objectMapper.writeValueAsString(commentDTO)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.comment").value(commentDTO.getComment()));
-    }
+//    @Test
+//    void addComment() throws Exception {
+//        CommentDTO commentDTO = new CommentDTO("test comment");
+//
+//        mockMvc.perform(post("/api/home/post/{id}", 1)
+//                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+//                        .accept(MediaType.APPLICATION_JSON_VALUE)
+//                        .content(objectMapper.writeValueAsString(commentDTO)))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.comment").value(commentDTO.getComment()));
+//    }
 
     @Test
     void getComments() throws Exception {

@@ -6,6 +6,7 @@ import dev.vorstu.dto.PostDTO;
 import dev.vorstu.services.CommentService;
 import dev.vorstu.services.PostService;
 import dev.vorstu.services.UserService;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("api/home/post")
 @Slf4j
+@Api("Контроллер для комментов")
 public class PostController {
 	
 	@Autowired
@@ -32,16 +34,17 @@ public class PostController {
 		return postService.getPostDTOById(id);
 	}
 	
-	@PostMapping(value="{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public CommentDTO addComment(@PathVariable("id")Long id, @RequestBody CommentDTO comment)
+/*	@MessageMapping("/comments")
+	@SendTo("/topic/comments/{id}")
+	public CommentDTO addComment(@RequestParam("id")Long id, @RequestBody CommentDTO comment)
 	{
-		 this.notifyFrontend();
+		 log.warn("Web-socket is working");
 	     return commentService.addComment(id, comment);
-	}
+	}*/
 	
 	@GetMapping("comments/{id}")
 	public Page<CommentDTO> getComments(@PathVariable("id")Long id, @RequestParam(defaultValue = "0") int pageNo,
-											 @RequestParam(defaultValue = "5") int pageSize)
+										@RequestParam(defaultValue = "5") int pageSize)
 	{
 		return commentService.getComments(id, pageNo, pageSize);
 	}
